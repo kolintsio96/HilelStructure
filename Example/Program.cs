@@ -67,6 +67,20 @@ namespace Example
             Console.WriteLine(linkedList.Last);
             Console.WriteLine(linkedList.Count);
             #endregion
+
+            #region Queue
+            Queue queue = new Queue();
+            queue.Enqueue(100);
+            queue.Enqueue(145);
+            queue.Enqueue(12);
+            queue.Dequeue();
+            queue.Contains(12);
+            queue.Contains(2);
+            queue.ToArray();
+
+            Console.WriteLine(queue.Peek());
+            Console.WriteLine(queue.Count);
+            #endregion
             Console.ReadLine();
         }
     }
