@@ -81,6 +81,20 @@ namespace Example
             Console.WriteLine(queue.Peek());
             Console.WriteLine(queue.Count);
             #endregion
+
+            #region Stack
+            Stack stack = new Stack();
+            stack.Push(32);
+            stack.Push(12);
+            stack.Push(43);
+            stack.Pop();
+            stack.Contains(12);
+            stack.Contains(2);
+            stack.ToArray();
+
+            Console.WriteLine(stack.Peek());
+            Console.WriteLine(stack.Count);
+            #endregion
             Console.ReadLine();
         }
     }
