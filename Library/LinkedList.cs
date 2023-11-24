@@ -11,6 +11,15 @@ namespace Library
         }
         public object Data { get; set; }
         public LinkedNode? Next { get; set; }
+
+        public override string ToString()
+        {
+            if (!Data.Equals(null))
+            {
+                return Data.ToString();
+            }
+            return "";
+        }
     }
     public struct LinkedList
     {
@@ -77,6 +86,7 @@ namespace Library
 
             newNode.Next = current.Next;
             current.Next = newNode;
+            Count++;
         }
         
         public bool Contains(object data)
@@ -104,7 +114,9 @@ namespace Library
             LinkedNode? current = First;
             while (current != null && current.Data != null)
             {
-                result[index++] = current.Data;
+                result[index] = current.Data;
+                current = current.Next;
+                index++;
             }
             return result;
         }
