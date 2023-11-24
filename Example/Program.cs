@@ -31,6 +31,18 @@ namespace Example
             Console.WriteLine(binaryTree.Count);
             Console.WriteLine(binaryTree.Root);
 
+            LinkedList linkedList = new LinkedList();
+            linkedList.Add(100);
+            linkedList.Add(21);
+            linkedList.AddFirst(11);
+            linkedList.Insert(2, 32);
+            linkedList.Contains(21);
+            linkedList.Contains(210);
+            linkedList.ToArray();
+
+            Console.WriteLine(linkedList.First);
+            Console.WriteLine(linkedList.Last);
+            Console.WriteLine(linkedList.Count);
             Console.ReadLine();
         }
     }
