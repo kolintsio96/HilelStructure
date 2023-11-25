@@ -2,7 +2,7 @@
 {
     public class Node
     {
-        public int Key;
+        public int Key { get; }
         public Node Left { get; set; }
         public Node Right { get; set; }
         public override string ToString()
@@ -16,7 +16,7 @@
         }
     }
 
-    public struct BinaryTree
+    public class BinaryTree
     {
         public Node Root { get; private set; }
         public int Count { get; private set; }

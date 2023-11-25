@@ -1,70 +1,50 @@
 ﻿namespace Library
 {
-    public struct Stack
+    public class Stack
     {
-        private LinkedNode? First { get; set; }
-        public int Count { get; private set; }
-
+        LinkedList linkedList = new LinkedList();
+        public int Count { get { return linkedList.Count; } }
         public void Push(object data)
         {            
-            LinkedNode node = new LinkedNode(data);
-            node.Next = First;
-            First = node;
-            Count++;
+            linkedList.AddFirst(data);
         }
         
         public object Pop()
         {
-            if (Count == 0)
+            if (linkedList.Count == 0)
             {
                 throw new InvalidOperationException("Empty stack");
             }
 
-            LinkedNode? temp = First;
-            First = First!.Next;
-            Count--;
+            LinkedNode? temp = linkedList.First;
+            linkedList.First = linkedList.First!.Next;
+            linkedList.Count--;
             return temp!.Data;
         }
         
         public object Peek()
         {
-            if (Count == 0)
+            if (linkedList.Count == 0)
             {
                 throw new InvalidOperationException("Empty stack");
             }
 
-            return First!.Data;
+            return linkedList.First!.Data;
         }
 
         public bool Contains(object data)
         {
-            LinkedNode? current = First;
-            while (current != null)
-            {
-                if (current.Data.Equals(data)) return true;
-                current = current.Next;
-            }
-            return false;
+            return linkedList.Contains(data);
         }
 
         public void Clear()
         {
-            Count = 0;
-            First = null;
+            linkedList.Clear();
         }
 
         public object[] ToArray()
         {
-            object[] result = new object[Count];
-            int index = 0;
-            LinkedNode? current = First;
-            while (current != null)
-            {
-                result[index] = current.Data;
-                current = current.Next;
-                index++;
-            }
-            return result;
+            return linkedList.ToArray();
         }
     }
 }

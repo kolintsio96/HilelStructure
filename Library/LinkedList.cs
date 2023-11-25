@@ -9,23 +9,19 @@ namespace Library
         {
             Data = data;
         }
-        public object Data { get; set; }
+        public object Data { get; }
         public LinkedNode? Next { get; set; }
 
         public override string ToString()
         {
-            if (!Data.Equals(null))
-            {
-                return Data.ToString();
-            }
-            return "";
+            return Data == null ? string.Empty : Data.ToString();
         }
     }
-    public struct LinkedList
+    public class LinkedList
     {
-        public LinkedNode? First { get; private set; }
+        public LinkedNode? First { get; set; }
         public LinkedNode? Last { get; private set; }
-        public int Count { get; private set; }
+        public int Count { get; set; }
 
         public void Add(object data)
         {

@@ -20,7 +20,7 @@
             return "";
         }
     }
-    public struct DoubleLinkedList
+    public class DoubleLinkedList
     {
         public DoubleLinkedNode? First { get; private set; }
         public DoubleLinkedNode? Last { get; private set; }

@@ -1,15 +1,18 @@
-﻿namespace Library
+﻿using System.Drawing;
+
+namespace Library
 {
-    public struct List
+    public class List
     {
         private object[] data;
-        private object[] emptyArray = new object[0];
+        private int Capacity { get; set; } = 4;
+        private object[] emptyArray = Array.Empty<object>();
 
-        public int Count { get { return data.Length; } }
+        public int Count { get; private set; } = 0;
 
         public List()
         {
-            data = emptyArray;
+            data = new object[Capacity];
         }
         
         public List(int capacity)
@@ -41,40 +44,52 @@
         
         public void Add(object value)
         {
-            int size = data.Length + 1;
-
+            Count++;
             object[] array = data;
-        
-            data = new object[size];
 
-            for (int i = 0; i < size; i++) {
-                if (i == size - 1)
+            if (Count > Capacity)
+            {
+                Capacity = Count;
+                data = new object[Capacity];
+
+                for (int i = 0; i < Count; i++)
                 {
-                    data[i] = value;
-                } else
-                {
-                    data[i] = array[i];
+                    if (i == Count - 1)
+                    {
+                        data[i] = value;
+                    }
+                    else
+                    {
+                        data[i] = array[i];
+                    }
+
                 }
-
+            } else
+            {
+                data[Count - 1] = value;
             }
+
         }
 
         public void Insert(int index, object value)
         {
-            if (index < 0 || index > data.Length)
+            if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             bool inserted = false;
-
-            int size = data.Length + 1;
+            Count++;
 
             object[] array = data;
 
-            data = new object[size];
+            if (Count > Capacity)
+            {
+                Capacity = Count;
+                data = new object[Capacity];
+            }
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < Count; i++)
             {
                 if (i == index)
                 {
@@ -108,20 +123,20 @@
         
         public void RemoveAt(int index)
         {
-            if (index < 0 || index > data.Length - 1)
+            if (index < 0 || index > Count - 1)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             bool skipped = false;
 
-            int size = data.Length - 1;
+            Count--;
 
             object[] array = data;
 
-            data = new object[size];
+            data = new object[Count];
 
-            for (int i = 0; i < size + 1; i++)
+            for (int i = 0; i < Count + 1; i++)
             {
                 if (i == index)
                 {
@@ -155,9 +170,9 @@
         }
 
         public int IndexOf(object value) {
-            for (int i = 0; i < data.Length; i++)
+            for (int i = 0; i < Count; i++)
             {
-                if (data[i].ToString() == value.ToString())
+                if (data[i].Equals(value))
                 {
                     return i;
                 }
@@ -167,12 +182,12 @@
 
         public object[] ToArray()
         {
-            if (data.Length == 0)
+            if (Count == 0)
             {
                 return emptyArray;
             }
 
-            object[] array = new object[data.Length];
+            object[] array = new object[Count];
             for (int i = 0; i < array.Length; i++)
             {
                 array[i] = data[i];
@@ -184,12 +199,12 @@
         {
             object first;
             object last;
-            for (int i = 0; i < data.Length / 2; i++)
+            for (int i = 0; i < Count / 2; i++)
             {
                 first = data[i];
-                last = data[data.Length - i - 1];
+                last = data[Count - i - 1];
                 data[i] = last;
-                data[data.Length - i - 1] = first;
+                data[Count - i - 1] = first;
             }
         }
     }

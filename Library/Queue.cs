@@ -1,80 +1,50 @@
 ﻿namespace Library
 {
-    public struct Queue
+    public class Queue
     {
-        private LinkedNode? First { get; set; }
-        private LinkedNode? Last { get; set; }
-        public int Count { get; private set; }
-
+        LinkedList linkedList = new LinkedList();
+        public int Count {  get { return linkedList.Count; } }
         public void Enqueue(object data)
         {
-            LinkedNode node = new LinkedNode(data);
-            LinkedNode tempNode = Last;
-            Last = node;
-            if (Count == 0)
-            {
-                First = Last;
-            } else
-            {
-                tempNode!.Next = Last;
-            }
-                
-            Count++;
+            linkedList.Add(data);
         }
 
         public object Dequeue()
         {
-            if (Count == 0)
+            if (linkedList.Count == 0)
             {
                 throw new InvalidOperationException();
             }
 
-            object result = First!.Data;
-            First = First.Next;
-            Count--;
+            object result = linkedList.First!.Data;
+            linkedList.First = linkedList.First.Next;
+            linkedList.Count--;
             return result;
         }
 
         public object Peek()
         {
-            if (Count == 0)
+            if (linkedList.Count == 0)
             {
                 throw new InvalidOperationException();
             }
 
-            return First!.Data;
+            return linkedList.First!.Data;
         }
 
         public bool Contains(object data)
         {
-            LinkedNode? current = First;
-            while (current != null)
-            {
-                if (current.Data.Equals(data)) return true;
-                current = current.Next;
-            }
-            return false;
+            return linkedList.Contains(data);
         }
 
         public void Clear()
         {
-            Count = 0;
-            First = null;
-            Last = null;
+            linkedList.Clear();
         }
 
         public object[] ToArray()
         {
-            object[] result = new object[Count];
-            int index = 0;
-            LinkedNode? current = First;
-            while (current != null)
-            {
-                result[index] = current.Data;
-                current = current.Next;
-                index++;
-            }
-            return result;
+            return linkedList.ToArray();
         }
     }
 }
