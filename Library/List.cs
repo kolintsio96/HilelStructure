@@ -1,8 +1,7 @@
-﻿using System.Drawing;
-
+﻿using Interface;
 namespace Library
 {
-    public class List
+    public struct List : IList
     {
         private object[] data;
         private int Capacity { get; set; } = 4;
