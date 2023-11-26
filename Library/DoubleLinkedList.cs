@@ -1,35 +1,20 @@
 ﻿namespace Library
 {
-    public class DoubleLinkedNode
-    {
-        public DoubleLinkedNode(object data)
-        {
-            Data = data;
-        }
-        public object Data { get; set; }
-        public DoubleLinkedNode? Next { get; set; }
+    public class DoubleLinkedNode : LinkedNode    {
+        public DoubleLinkedNode(object data) : base(data) { }
+        public new DoubleLinkedNode? Next { get; set; }
 
         public DoubleLinkedNode? Previous { get; set; }
-
-        public override string ToString()
-        {
-            if (!Data.Equals(null))
-            {
-                return Data.ToString();
-            }
-            return "";
-        }
     }
-    public class DoubleLinkedList
+    public class DoubleLinkedList : LinkedList
     {
-        public DoubleLinkedNode? First { get; private set; }
-        public DoubleLinkedNode? Last { get; private set; }
-        public int Count { get; private set; }
-
-        public void Add(object data)
+        public new DoubleLinkedNode? First { get; private set; }
+        public new DoubleLinkedNode? Last { get; private set; }
+        
+        public override void Add(object data)
         {
             DoubleLinkedNode node = new DoubleLinkedNode(data);
-
+           
             if (First == null)
                 First = node;
             else
@@ -41,7 +26,7 @@
             Count++;
         }
         
-        public void AddFirst(object data)
+        public override void AddFirst(object data)
         {
             DoubleLinkedNode node = new DoubleLinkedNode(data);
             DoubleLinkedNode? temp = First;
@@ -128,41 +113,6 @@
         public void RemoveLast()
         {
             RemoveElement(true);
-        }
-
-        public bool Contains(object data)
-        {
-            DoubleLinkedNode? current = First;
-            while (current != null)
-            {
-                if (current.Data.Equals(data))
-                {
-                    return true;
-                }
-                current = current.Next;
-            }
-            return false;
-        }
-
-        public object[] ToArray()
-        {
-            object[] result = new object[Count];
-            int index = 0;
-            DoubleLinkedNode? current = First;
-            while (current != null)
-            {
-                result[index] = current.Data;
-                current = current.Next;
-                index++;
-            }
-            return result;
-        }
-
-        public void Clear()
-        {
-            First = null;
-            Last = null;
-            Count = 0;
         }
     }
 }

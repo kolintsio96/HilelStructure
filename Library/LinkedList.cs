@@ -23,7 +23,7 @@ namespace Library
         public LinkedNode? Last { get; private set; }
         public int Count { get; set; }
 
-        public void Add(object data)
+        public virtual void Add(object data)
         {
             LinkedNode node = new LinkedNode(data);
 
@@ -39,8 +39,8 @@ namespace Library
 
             Count++;
         }
-        
-        public void AddFirst(object data)
+
+        public virtual void AddFirst(object data)
         {
             LinkedNode node = new LinkedNode(data);
             node.Next = First;
