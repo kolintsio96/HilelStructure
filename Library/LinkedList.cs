@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Xml.Linq;
-
-namespace Library
+﻿namespace Library
 {
     public class LinkedNode
     {

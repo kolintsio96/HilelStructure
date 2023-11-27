@@ -4,7 +4,8 @@ namespace Library
     public struct List : IList
     {
         private object[] data;
-        private int Capacity { get; set; } = 4;
+        public int Capacity { get; private set; } = 4;
+
         private object[] emptyArray = Array.Empty<object>();
 
         public int Count { get; private set; } = 0;
@@ -16,6 +17,7 @@ namespace Library
         
         public List(int capacity)
         {
+            Capacity = capacity;
             if (capacity < 0)
             {
                 throw new ArgumentOutOfRangeException();
