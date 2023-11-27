@@ -2,7 +2,7 @@
 {
     public class Stack
     {
-        LinkedList linkedList = new LinkedList();
+        private LinkedList linkedList = new LinkedList();
         public int Count { get { return linkedList.Count; } }
         public void Push(object data)
         {            
@@ -11,15 +11,7 @@
         
         public object Pop()
         {
-            if (linkedList.Count == 0)
-            {
-                throw new InvalidOperationException("Empty stack");
-            }
-
-            LinkedNode? temp = linkedList.First;
-            linkedList.First = linkedList.First!.Next;
-            linkedList.Count--;
-            return temp!.Data;
+            return linkedList.RemoveFirst();
         }
         
         public object Peek()

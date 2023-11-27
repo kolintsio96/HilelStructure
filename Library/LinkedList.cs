@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Xml.Linq;
+﻿
+using System.Collections.Generic;
 
 namespace Library
 {
@@ -19,9 +19,9 @@ namespace Library
     }
     public class LinkedList
     {
-        public LinkedNode? First { get; set; }
-        public LinkedNode? Last { get; private set; }
-        public int Count { get; set; }
+        public LinkedNode? First { get; protected set; }
+        public LinkedNode? Last { get; protected set; }
+        public int Count { get; protected set; }
 
         public virtual void Add(object data)
         {
@@ -52,7 +52,20 @@ namespace Library
                 
             Count++;
         }
-        
+
+        public object RemoveFirst()
+        {
+            if (Count == 0)
+            {
+                throw new InvalidOperationException();
+            }
+
+            object result = First!.Data;
+            First = First.Next;
+            Count--;
+            return result;
+        }
+
         public void Insert(int index, object data)
         {
             if (index < 0 || index > Count)

@@ -5,7 +5,7 @@ namespace Library
     public class List
     {
         private object[] data;
-        private int Capacity { get; set; } = 4;
+        public int Capacity { get; private set; } = 4;
         private object[] emptyArray = Array.Empty<object>();
 
         public int Count { get; private set; } = 0;
@@ -33,12 +33,24 @@ namespace Library
         {
             get
             {
-                return data[index];
+                if(index <= Count)
+                {
+                    return data[index];
+                } else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
             }
 
             set
             {
-                data[index] = value;
+                if (index <= Count)
+                {
+                    data[index] = value;
+                } else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
             }
         }
         
@@ -49,7 +61,7 @@ namespace Library
 
             if (Count > Capacity)
             {
-                Capacity = Count;
+                Capacity = Count * 2;
                 data = new object[Capacity];
 
                 for (int i = 0; i < Count; i++)
@@ -162,6 +174,8 @@ namespace Library
         public void Clear()
         {
             data = emptyArray;
+            Count = 0;
+            Capacity = 4;
         }
 
         public bool Contains(object value)
@@ -172,7 +186,7 @@ namespace Library
         public int IndexOf(object value) {
             for (int i = 0; i < Count; i++)
             {
-                if (data[i].Equals(value))
+                if ((data[i] == null && value == null) || (data[i] != null && value != null && data[i].Equals(value)))
                 {
                     return i;
                 }

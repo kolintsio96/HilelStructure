@@ -2,15 +2,10 @@
 {
     public class DoubleLinkedNode : LinkedNode    {
         public DoubleLinkedNode(object data) : base(data) { }
-        public new DoubleLinkedNode? Next { get; set; }
-
         public DoubleLinkedNode? Previous { get; set; }
     }
     public class DoubleLinkedList : LinkedList
-    {
-        public new DoubleLinkedNode? First { get; private set; }
-        public new DoubleLinkedNode? Last { get; private set; }
-        
+    {        
         public override void Add(object data)
         {
             DoubleLinkedNode node = new DoubleLinkedNode(data);
@@ -20,7 +15,7 @@
             else
             {
                 Last!.Next = node;
-                node.Previous = Last;
+                node.Previous = (DoubleLinkedNode)Last;
             }
             Last = node;
             Count++;
@@ -29,7 +24,7 @@
         public override void AddFirst(object data)
         {
             DoubleLinkedNode node = new DoubleLinkedNode(data);
-            DoubleLinkedNode? temp = First;
+            DoubleLinkedNode? temp = (DoubleLinkedNode)First;
             node.Next = temp;
             First = node;
             if (Count == 0)
@@ -44,7 +39,7 @@
 
         public bool Remove(object data)
         {
-            DoubleLinkedNode? current = First;
+            DoubleLinkedNode? current = (DoubleLinkedNode)First;
 
             while (current != null)
             {
@@ -52,13 +47,14 @@
                 {
                     break;
                 }
-                current = current.Next;
+                current = (DoubleLinkedNode)current.Next;
             }
             if (current != null)
             {
                 if (current.Next != null)
                 {
-                    current.Next.Previous = current.Previous;
+                    DoubleLinkedNode next = (DoubleLinkedNode)current.Next;
+                    next.Previous = current.Previous;
                 }
                 else
                 {
@@ -95,12 +91,14 @@
             {
                 if (removeLast)
                 {
-                    Last = Last!.Previous;
+                    DoubleLinkedNode last = (DoubleLinkedNode)Last;
+                    Last = last!.Previous;
                     Last!.Next = null;
                 } else
                 {
-                    First = First.Next;
-                    First!.Previous = null;
+                    DoubleLinkedNode first = (DoubleLinkedNode)First;
+                    First = first.Next;
+                    first!.Previous = null;
                 } 
             }
         }
