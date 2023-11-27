@@ -2,7 +2,7 @@
 {
     public class Queue
     {
-        LinkedList linkedList = new LinkedList();
+        private LinkedList linkedList = new LinkedList();
         public int Count {  get { return linkedList.Count; } }
         public void Enqueue(object data)
         {
@@ -11,15 +11,7 @@
 
         public object Dequeue()
         {
-            if (linkedList.Count == 0)
-            {
-                throw new InvalidOperationException();
-            }
-
-            object result = linkedList.First!.Data;
-            linkedList.First = linkedList.First.Next;
-            linkedList.Count--;
-            return result;
+            return linkedList.RemoveFirst();
         }
 
         public object Peek()
