@@ -27,7 +27,7 @@ namespace Library
             Root = Add(Root, value);
         }
 
-        private INode Add(INode root, int value)
+        private INode Add(INode? root, int value)
         {
             if (root == null)
             {
@@ -53,7 +53,7 @@ namespace Library
             return Contains(Root, value);
         }
 
-        private bool Contains(INode root, object value)
+        private bool Contains(INode? root, object value)
         {
             if (root == null || root.Key == (int)value)
             {

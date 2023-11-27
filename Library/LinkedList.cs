@@ -1,28 +1,29 @@
-﻿namespace Library
+﻿using Interface;
+namespace Library
 {
-    public class LinkedNode
+    public class LinkedNode : ILinkedNode
     {
         public LinkedNode(object data)
         {
             Data = data;
         }
         public object Data { get; }
-        public LinkedNode? Next { get; set; }
+        public ILinkedNode? Next { get; set; }
 
         public override string ToString()
         {
             return Data == null ? string.Empty : Data.ToString();
         }
     }
-    public class LinkedList
+    public class LinkedList : ILinkedList
     {
-        public LinkedNode? First { get; protected set; }
-        public LinkedNode? Last { get; protected set; }
+        public ILinkedNode? First { get; protected set; }
+        public ILinkedNode? Last { get; protected set; }
         public int Count { get; protected set; }
 
         public virtual void Add(object data)
         {
-            LinkedNode node = new LinkedNode(data);
+            ILinkedNode node = new LinkedNode(data);
 
             if (First == null)
             {
@@ -70,7 +71,7 @@
                 throw new ArgumentOutOfRangeException();
             }
 
-            LinkedNode newNode = new LinkedNode(data);
+            ILinkedNode newNode = new LinkedNode(data);
 
             if (index == 0)
             {
@@ -78,7 +79,7 @@
                 return;
             }
 
-            LinkedNode current = First;
+            ILinkedNode current = First;
 
             for (int i = 0; i < index - 1 && current != null; i++)
             {
@@ -97,7 +98,7 @@
         
         public bool Contains(object data)
         {
-            LinkedNode? current = First;
+            ILinkedNode? current = First;
             while (current != null && current.Data != null)
             {
                 if (current.Data.Equals(data)) return true;
@@ -117,7 +118,7 @@
         {
             object[] result = new object[Count];
             int index = 0;
-            LinkedNode? current = First;
+            ILinkedNode? current = First;
             while (current != null && current.Data != null)
             {
                 result[index] = current.Data;
