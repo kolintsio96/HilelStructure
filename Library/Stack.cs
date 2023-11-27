@@ -1,6 +1,7 @@
-﻿namespace Library
+﻿using Interface;
+namespace Library
 {
-    public class Stack
+    public class Stack : IStack
     {
         private LinkedList linkedList = new LinkedList();
         public int Count { get { return linkedList.Count; } }
