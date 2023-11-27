@@ -1,6 +1,6 @@
 ﻿namespace Interface
 {
-    public interface IStack
+    public interface IStack : ICollection
     {
         void Push(object data);
 

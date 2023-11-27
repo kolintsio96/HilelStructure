@@ -5,11 +5,9 @@
         object Data { get; }
 
         ILinkedNode Next { get; set; }
-
-        string ToString();
     }
     
-    public interface ILinkedList
+    public interface ILinkedList : ICollection
     {
         ILinkedNode First { get; }
 

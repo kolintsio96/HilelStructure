@@ -1,6 +1,6 @@
 ﻿namespace Interface
 {
-    public interface IQueue
+    public interface IQueue : ICollection
     {
         void Enqueue(object data);
 

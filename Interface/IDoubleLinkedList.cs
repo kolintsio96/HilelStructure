@@ -5,7 +5,7 @@
         IDoubleLinkedNode Previous { get; set; }
     }
 
-    public interface IDoubleLinkedList : ILinkedList
+    public interface IDoubleLinkedList : ILinkedList, ICollection
     {
         bool Remove(object data);
 

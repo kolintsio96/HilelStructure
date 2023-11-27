@@ -1,7 +1,7 @@
 ﻿using Interface;
 namespace Library
 {
-    public struct List : IList
+    public class List : IList
     {
         private object[] data;
         public int Capacity { get; private set; } = 4;
