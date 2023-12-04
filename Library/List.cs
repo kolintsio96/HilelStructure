@@ -1,17 +1,17 @@
 ﻿using Interface;
 namespace Library
 {
-    public class List : IList
+    public class List<T> : Interface.IList<T>
     {
-        private object[] data;
+        private T[] data;
         public int Capacity { get; private set; } = 4;
-        private object[] emptyArray = Array.Empty<object>();
+        private T[] emptyArray = Array.Empty<T>();
 
         public int Count { get; private set; } = 0;
 
         public List()
         {
-            data = new object[Capacity];
+            data = new T[Capacity];
         }
         
         public List(int capacity)
@@ -25,11 +25,11 @@ namespace Library
                 data = emptyArray;
             } else
             {
-                data = new object[capacity];
+                data = new T[capacity];
             }
         }
 
-        public object this[int index]
+        public T this[int index]
         {
             get
             {
@@ -54,15 +54,15 @@ namespace Library
             }
         }
         
-        public void Add(object value)
+        public void Add(T value)
         {
             Count++;
-            object[] array = data;
+            T[] array = data;
 
             if (Count > Capacity)
             {
                 Capacity = Count * 2;
-                data = new object[Capacity];
+                data = new T[Capacity];
 
                 for (int i = 0; i < Count; i++)
                 {
@@ -83,7 +83,7 @@ namespace Library
 
         }
 
-        public void Insert(int index, object value)
+        public void Insert(int index, T value)
         {
             if (index < 0 || index > Count)
             {
@@ -93,12 +93,12 @@ namespace Library
             bool inserted = false;
             Count++;
 
-            object[] array = data;
+            T[] array = data;
 
             if (Count > Capacity)
             {
                 Capacity = Count;
-                data = new object[Capacity];
+                data = new T[Capacity];
             }
 
             for (int i = 0; i < Count; i++)
@@ -124,7 +124,7 @@ namespace Library
             }
         }
         
-        public void Remove(object value)
+        public void Remove(T value)
         {
             int index = IndexOf(value);
             if (index != -1)
@@ -144,9 +144,9 @@ namespace Library
 
             Count--;
 
-            object[] array = data;
+            T[] array = data;
 
-            data = new object[Count];
+            data = new T[Count];
 
             for (int i = 0; i < Count + 1; i++)
             {
@@ -178,12 +178,12 @@ namespace Library
             Capacity = 4;
         }
 
-        public bool Contains(object value)
+        public bool Contains(T value)
         {
             return IndexOf(value) != -1;
         }
 
-        public int IndexOf(object value) {
+        public int IndexOf(T value) {
             for (int i = 0; i < Count; i++)
             {
                 if ((data[i] == null && value == null) || (data[i] != null && value != null && data[i].Equals(value)))
@@ -194,14 +194,14 @@ namespace Library
             return -1;
         }
 
-        public object[] ToArray()
+        public T[] ToArray()
         {
             if (Count == 0)
             {
                 return emptyArray;
             }
 
-            object[] array = new object[Count];
+            T[] array = new T[Count];
             for (int i = 0; i < array.Length; i++)
             {
                 array[i] = data[i];
@@ -211,8 +211,8 @@ namespace Library
 
         public void Reverse()
         {
-            object first;
-            object last;
+            T first;
+            T last;
             for (int i = 0; i < Count / 2; i++)
             {
                 first = data[i];

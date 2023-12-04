@@ -1,14 +1,14 @@
 ﻿namespace Interface
 {
-    public interface ICollection
+    public interface ICollection<T>
     {
         int Count { get; }
 
         void Clear();
 
-        object[] ToArray();
+        T[] ToArray();
 
-        bool Contains(object data);
+        bool Contains(T data);
 
     }
 }

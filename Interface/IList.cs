@@ -1,20 +1,20 @@
 ﻿namespace Interface
 {
-    public interface IList : ICollection
+    public interface IList<T> : ICollection<T>
     {
         int Capacity { get; }
         
-        object this[int index] { get; set; }
+        T this[int index] { get; set; }
         
-        void Add(object data);
+        void Add(T data);
         
-        void Insert(int index, object data);
+        void Insert(int index, T data);
         
-        void Remove(object data);
+        void Remove(T data);
         
         void RemoveAt(int index);
         
-        int IndexOf(object data);
+        int IndexOf(T data);
         
         void Reverse();
     }
