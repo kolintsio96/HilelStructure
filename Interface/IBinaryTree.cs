@@ -8,7 +8,6 @@
         
         INode Right { get; set; }
 
-        string ToString();
     }
     public interface IBinaryTree : ICollection
     {
