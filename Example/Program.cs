@@ -6,7 +6,7 @@ namespace Example
         private static void Main(string[] args)
         {
             #region List
-            List list = new List();
+            Library.List<int> list = new Library.List<int>();
             list.Add(1);
             list.Insert(0, 2);
             list.Add(3);           
@@ -19,7 +19,7 @@ namespace Example
             #endregion
 
             #region BinaryTree
-            BinaryTree binaryTree = new BinaryTree();
+            BinaryTree<int> binaryTree = new BinaryTree<int>();
             binaryTree.Add(100);
             binaryTree.Add(58);
             binaryTree.Add(2);
@@ -36,7 +36,7 @@ namespace Example
             #endregion
 
             #region LinkedList
-            LinkedList linkedList = new LinkedList();
+            Library.LinkedList<int> linkedList = new Library.LinkedList<int>();
             linkedList.Add(100);
             linkedList.Add(21);
             linkedList.AddFirst(11);
@@ -51,7 +51,7 @@ namespace Example
             #endregion
 
             #region DoubleLinkedList
-            DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
+            DoubleLinkedList<int> doubleLinkedList = new DoubleLinkedList<int>();
             doubleLinkedList.Add(100);
             doubleLinkedList.Add(21);
             doubleLinkedList.Add(1);
@@ -69,7 +69,7 @@ namespace Example
             #endregion
 
             #region Queue
-            Queue queue = new Queue();
+            Library.Queue<int> queue = new Library.Queue<int>();
             queue.Enqueue(100);
             queue.Enqueue(145);
             queue.Enqueue(12);
@@ -83,7 +83,7 @@ namespace Example
             #endregion
 
             #region Stack
-            Stack stack = new Stack();
+            Library.Stack<int> stack = new Library.Stack<int>();
             stack.Push(32);
             stack.Push(12);
             stack.Push(43);
