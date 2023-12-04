@@ -1,31 +1,31 @@
 ﻿using Interface;
 namespace Library
 {
-    public class DoubleLinkedNode : LinkedNode, IDoubleLinkedNode   {
-        public DoubleLinkedNode(object data) : base(data) { }
-        public IDoubleLinkedNode? Previous { get; set; }
+    public class DoubleLinkedNode<T> : LinkedNode<T>, IDoubleLinkedNode<T>   {
+        public DoubleLinkedNode(T data) : base(data) { }
+        public IDoubleLinkedNode<T>? Previous { get; set; }
     }
-    public class DoubleLinkedList : LinkedList, IDoubleLinkedList
+    public class DoubleLinkedList<T> : LinkedList<T>, IDoubleLinkedList<T>
     {        
-        public override void Add(object data)
+        public override void Add(T data)
         {
-            DoubleLinkedNode node = new DoubleLinkedNode(data);
+            IDoubleLinkedNode<T> node = new DoubleLinkedNode<T>(data);
            
             if (First == null)
                 First = node;
             else
             {
                 Last!.Next = node;
-                node.Previous = (DoubleLinkedNode)Last;
+                node.Previous = (DoubleLinkedNode<T>)Last;
             }
             Last = node;
             Count++;
         }
         
-        public override void AddFirst(object data)
+        public override void AddFirst(T data)
         {
-            DoubleLinkedNode node = new DoubleLinkedNode(data);
-            DoubleLinkedNode? temp = (DoubleLinkedNode)First;
+            IDoubleLinkedNode<T> node = new DoubleLinkedNode<T>(data);
+            IDoubleLinkedNode<T>? temp = (IDoubleLinkedNode<T>?)First;
             node.Next = temp;
             First = node;
             if (Count == 0)
@@ -38,9 +38,9 @@ namespace Library
             Count++;
         }
 
-        public bool Remove(object data)
+        public bool Remove(T data)
         {
-            DoubleLinkedNode? current = (DoubleLinkedNode)First;
+            IDoubleLinkedNode<T>? current = (IDoubleLinkedNode<T>?)First;
 
             while (current != null)
             {
@@ -48,13 +48,13 @@ namespace Library
                 {
                     break;
                 }
-                current = (DoubleLinkedNode)current.Next;
+                current = (IDoubleLinkedNode<T>)current.Next;
             }
             if (current != null)
             {
                 if (current.Next != null)
                 {
-                    DoubleLinkedNode next = (DoubleLinkedNode)current.Next;
+                    IDoubleLinkedNode<T> next = (IDoubleLinkedNode<T>)current.Next;
                     next.Previous = current.Previous;
                 }
                 else
@@ -92,12 +92,12 @@ namespace Library
             {
                 if (removeLast)
                 {
-                    IDoubleLinkedNode last = (IDoubleLinkedNode)Last;
+                    IDoubleLinkedNode<T> last = (IDoubleLinkedNode<T>)Last;
                     Last = last!.Previous;
                     Last!.Next = null;
                 } else
                 {
-                    IDoubleLinkedNode first = (IDoubleLinkedNode)First;
+                    IDoubleLinkedNode<T> first = (IDoubleLinkedNode<T>)First;
                     First = first.Next;
                     first!.Previous = null;
                 } 

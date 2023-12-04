@@ -1,29 +1,29 @@
 ﻿using Interface;
 namespace Library
 {
-    public class LinkedNode : ILinkedNode
+    public class LinkedNode<T> : ILinkedNode<T>
     {
-        public LinkedNode(object data)
+        public LinkedNode(T data)
         {
             Data = data;
         }
-        public object Data { get; }
-        public ILinkedNode? Next { get; set; }
+        public T Data { get; }
+        public ILinkedNode<T>? Next { get; set; }
 
         public override string ToString()
         {
             return Data == null ? string.Empty : Data.ToString();
         }
     }
-    public class LinkedList : ILinkedList
+    public class LinkedList<T> : ILinkedList<T>
     {
-        public ILinkedNode? First { get; protected set; }
-        public ILinkedNode? Last { get; protected set; }
+        public ILinkedNode<T>? First { get; protected set; }
+        public ILinkedNode<T>? Last { get; protected set; }
         public int Count { get; protected set; }
 
-        public virtual void Add(object data)
+        public virtual void Add(T data)
         {
-            ILinkedNode node = new LinkedNode(data);
+            ILinkedNode<T> node = new LinkedNode<T>(data);
 
             if (First == null)
             {
@@ -38,9 +38,9 @@ namespace Library
             Count++;
         }
 
-        public virtual void AddFirst(object data)
+        public virtual void AddFirst(T data)
         {
-            LinkedNode node = new LinkedNode(data);
+            ILinkedNode<T> node = new LinkedNode<T>(data);
             node.Next = First;
             First = node;
             if (Count == 0)
@@ -51,27 +51,27 @@ namespace Library
             Count++;
         }
 
-        public object RemoveFirst()
+        public T RemoveFirst()
         {
             if (Count == 0)
             {
                 throw new InvalidOperationException();
             }
 
-            object result = First!.Data;
+            T result = First!.Data;
             First = First.Next;
             Count--;
             return result;
         }
 
-        public void Insert(int index, object data)
+        public void Insert(int index, T data)
         {
             if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
-            ILinkedNode newNode = new LinkedNode(data);
+            ILinkedNode<T> newNode = new LinkedNode<T>(data);
 
             if (index == 0)
             {
@@ -79,7 +79,7 @@ namespace Library
                 return;
             }
 
-            ILinkedNode current = First;
+            ILinkedNode<T> current = First;
 
             for (int i = 0; i < index - 1 && current != null; i++)
             {
@@ -96,9 +96,9 @@ namespace Library
             Count++;
         }
         
-        public bool Contains(object data)
+        public bool Contains(T data)
         {
-            ILinkedNode? current = First;
+            ILinkedNode<T>? current = First;
             while (current != null && current.Data != null)
             {
                 if (current.Data.Equals(data)) return true;
@@ -114,11 +114,11 @@ namespace Library
             Last = null;
         }
 
-        public object[] ToArray()
+        public T[] ToArray()
         {
-            object[] result = new object[Count];
+            T[] result = new T[Count];
             int index = 0;
-            ILinkedNode? current = First;
+            ILinkedNode<T>? current = First;
             while (current != null && current.Data != null)
             {
                 result[index] = current.Data;
