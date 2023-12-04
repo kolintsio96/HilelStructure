@@ -1,21 +1,21 @@
 ﻿using Interface;
 namespace Library
 {
-    public class Stack : IStack
+    public class Stack<T> : IStack<T>
     {
-        private LinkedList linkedList = new LinkedList();
+        private ILinkedList<T> linkedList = new LinkedList<T>();
         public int Count { get { return linkedList.Count; } }
-        public void Push(object data)
+        public void Push(T data)
         {            
             linkedList.AddFirst(data);
         }
         
-        public object Pop()
+        public T Pop()
         {
             return linkedList.RemoveFirst();
         }
         
-        public object Peek()
+        public T Peek()
         {
             if (linkedList.Count == 0)
             {
@@ -25,7 +25,7 @@ namespace Library
             return linkedList.First!.Data;
         }
 
-        public bool Contains(object data)
+        public bool Contains(T data)
         {
             return linkedList.Contains(data);
         }
@@ -35,7 +35,7 @@ namespace Library
             linkedList.Clear();
         }
 
-        public object[] ToArray()
+        public T[] ToArray()
         {
             return linkedList.ToArray();
         }
