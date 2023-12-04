@@ -1,10 +1,11 @@
-﻿namespace Library
+﻿using Interface;
+namespace Library
 {
-    public class Node
+    public class Node : INode
     {
         public int Key { get; }
-        public Node Left { get; set; }
-        public Node Right { get; set; }
+        public INode Left { get; set; }
+        public INode Right { get; set; }
         public override string ToString()
         {
             return Key.ToString();
@@ -16,9 +17,9 @@
         }
     }
 
-    public class BinaryTree
+    public class BinaryTree : IBinaryTree
     {
-        public Node Root { get; private set; }
+        public INode? Root { get; private set; }
         public int Count { get; private set; }
 
         public void Add(int value)
@@ -26,7 +27,7 @@
             Root = Add(Root, value);
         }
 
-        private Node Add(Node root, int value)
+        private INode Add(INode? root, int value)
         {
             if (root == null)
             {
@@ -47,19 +48,19 @@
             return root;
         }
 
-        public bool Contains(int value)
+        public bool Contains(object value)
         {
             return Contains(Root, value);
         }
 
-        private bool Contains(Node root, int value)
+        private bool Contains(INode? root, object value)
         {
-            if (root == null || root.Key == value)
+            if (root == null || root.Key == (int)value)
             {
                 return root != null;
             }
 
-            if (value < root.Key)
+            if ((int)value < root.Key)
             {
                 return Contains(root.Left, value);
             }
@@ -75,12 +76,12 @@
             Count = 0;
         }
 
-        public int[] ToArray()
+        public object[] ToArray()
         {
-            int[] result = new int[Count];
+            object[] result = new object[Count];
             int index = 0;
 
-            void InorderToArray(Node node)
+            void InorderToArray(INode node)
             {
                 if (node != null)
                 {

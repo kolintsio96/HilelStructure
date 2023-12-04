@@ -1,10 +1,11 @@
-﻿namespace Library
+﻿using Interface;
+namespace Library
 {
-    public class DoubleLinkedNode : LinkedNode    {
+    public class DoubleLinkedNode : LinkedNode, IDoubleLinkedNode   {
         public DoubleLinkedNode(object data) : base(data) { }
-        public DoubleLinkedNode? Previous { get; set; }
+        public IDoubleLinkedNode? Previous { get; set; }
     }
-    public class DoubleLinkedList : LinkedList
+    public class DoubleLinkedList : LinkedList, IDoubleLinkedList
     {        
         public override void Add(object data)
         {
@@ -91,12 +92,12 @@
             {
                 if (removeLast)
                 {
-                    DoubleLinkedNode last = (DoubleLinkedNode)Last;
+                    IDoubleLinkedNode last = (IDoubleLinkedNode)Last;
                     Last = last!.Previous;
                     Last!.Next = null;
                 } else
                 {
-                    DoubleLinkedNode first = (DoubleLinkedNode)First;
+                    IDoubleLinkedNode first = (IDoubleLinkedNode)First;
                     First = first.Next;
                     first!.Previous = null;
                 } 

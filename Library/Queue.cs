@@ -1,6 +1,7 @@
-﻿namespace Library
+﻿using Interface;
+namespace Library
 {
-    public class Queue
+    public class Queue : IQueue
     {
         private LinkedList linkedList = new LinkedList();
         public int Count {  get { return linkedList.Count; } }

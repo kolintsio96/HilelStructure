@@ -1,8 +1,7 @@
-﻿using System.Drawing;
-
+﻿using Interface;
 namespace Library
 {
-    public class List
+    public class List : IList
     {
         private object[] data;
         public int Capacity { get; private set; } = 4;
@@ -17,6 +16,7 @@ namespace Library
         
         public List(int capacity)
         {
+            Capacity = capacity;
             if (capacity < 0)
             {
                 throw new ArgumentOutOfRangeException();
