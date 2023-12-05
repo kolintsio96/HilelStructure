@@ -1,11 +1,11 @@
 ﻿namespace Interface
 {
-    public interface IStack : ICollection
+    public interface IStack<T> : ICollection<T>
     {
-        void Push(object data);
+        void Push(T data);
 
-        object Pop();
+        T Pop();
 
-        object Peek();
+        T Peek();
     }
 }

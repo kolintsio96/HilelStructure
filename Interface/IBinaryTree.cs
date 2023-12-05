@@ -1,19 +1,19 @@
 ﻿namespace Interface
 {
-    public interface INode
+    public interface INode<T>
     {
-        int Key { get; }
-        
-        INode Left { get; set; }
-        
-        INode Right { get; set; }
+        T Key { get; }
+
+        INode<T> Left { get; set; }
+
+        INode<T> Right { get; set; }
 
     }
-    public interface IBinaryTree : ICollection
+    public interface IBinaryTree<T> : ICollection<T>
     {
-        INode Root { get; }
+        INode<T> Root { get; }
 
-        void Add(int data);
+        void Add(T data);
     }
 
 }

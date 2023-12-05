@@ -1,11 +1,11 @@
 ﻿namespace Interface
 {
-    public interface IQueue : ICollection
+    public interface IQueue<T> : ICollection<T>
     {
-        void Enqueue(object data);
+        void Enqueue(T data);
 
-        object Dequeue();
+        T Dequeue();
 
-        object Peek();
+        T Peek();
     }
 }

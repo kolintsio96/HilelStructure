@@ -1,13 +1,13 @@
 ﻿namespace Interface
 {
-    public interface IDoubleLinkedNode : ILinkedNode
+    public interface IDoubleLinkedNode<T> : ILinkedNode<T>
     {
-        IDoubleLinkedNode Previous { get; set; }
+        IDoubleLinkedNode<T> Previous { get; set; }
     }
 
-    public interface IDoubleLinkedList : ILinkedList, ICollection
+    public interface IDoubleLinkedList<T> : ILinkedList<T>, ICollection<T>
     {
-        bool Remove(object data);
+        bool Remove(T data);
 
         void RemoveLast();
     }

@@ -1,24 +1,24 @@
 ﻿namespace Interface
 {
-    public interface ILinkedNode
+    public interface ILinkedNode<T>
     {
-        object Data { get; }
+        T Data { get; }
 
-        ILinkedNode Next { get; set; }
+        ILinkedNode<T> Next { get; set; }
     }
     
-    public interface ILinkedList : ICollection
+    public interface ILinkedList<T> : ICollection<T>
     {
-        ILinkedNode First { get; }
+        ILinkedNode<T> First { get; }
 
-        ILinkedNode Last { get; }
+        ILinkedNode<T> Last { get; }
 
-        void Add(object data);
+        void Add(T data);
         
-        void AddFirst(object data);
+        void AddFirst(T data);
         
-        object RemoveFirst();
+        T RemoveFirst();
 
-        void Insert(int index, object data);
+        void Insert(int index, T data);
     }
 }
