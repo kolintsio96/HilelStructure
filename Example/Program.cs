@@ -107,8 +107,20 @@ namespace Example
 
             eventList.OnAdd(1);
             eventList.OnAdd(2);
-            eventList.OnInsert(0, 3);
+            eventList.OnAdd(3);
+            eventList.OnInsert(0, 4);
             eventList.OnRemove(2);
+            eventList.OnRemoveAt(0);
+
+            eventList.Add -= logger.Log;
+            eventList.Insert -= logger.Log;
+            eventList.Remove -= logger.Log;
+            eventList.RemoveAt -= logger.Log;
+
+            eventList.OnAdd(5);
+            eventList.OnAdd(6);
+            eventList.OnInsert(0, 7);
+            eventList.OnRemove(5);
             eventList.OnRemoveAt(0);
             #endregion
             Console.ReadLine();
