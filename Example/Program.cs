@@ -95,7 +95,31 @@ namespace Example
             Console.WriteLine(stack.Peek());
             Console.WriteLine(stack.Count);
             #endregion
+
+            #region EventList
+            Logger logger = new Logger();
+            EventList<int> eventList = new EventList<int>();
+
+            eventList.Add += logger.Log;
+            eventList.Insert += logger.Log;
+            eventList.Remove += logger.Log;
+            eventList.RemoveAt += logger.Log;
+
+            eventList.OnAdd(1);
+            eventList.OnAdd(2);
+            eventList.OnInsert(0, 3);
+            eventList.OnRemove(2);
+            eventList.OnRemoveAt(0);
+            #endregion
             Console.ReadLine();
+        }
+    }
+
+    class Logger
+    {
+        public void Log(object? sender, ListEventArgs eventArgs)
+        {
+            Console.WriteLine($"Called event: {eventArgs.EventName}");
         }
     }
 }
