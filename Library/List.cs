@@ -54,7 +54,7 @@ namespace Library
             }
         }
         
-        public void Add(T value)
+        public virtual void Add(T value)
         {
             Count++;
             T[] array = data;
@@ -83,7 +83,7 @@ namespace Library
 
         }
 
-        public void Insert(int index, T value)
+        public virtual void Insert(int index, T value)
         {
             if (index < 0 || index > Count)
             {
@@ -93,7 +93,8 @@ namespace Library
             bool inserted = false;
             Count++;
 
-            T[] array = data;
+            T[] array = new T[Capacity];
+            data.CopyTo(array, 0);
 
             if (Count > Capacity)
             {
@@ -118,13 +119,11 @@ namespace Library
                     {
                         data[i] = array[i - 1];
                     }
-
                 }
-
             }
         }
         
-        public void Remove(T value)
+        public virtual void Remove(T value)
         {
             int index = IndexOf(value);
             if (index != -1)
@@ -133,7 +132,7 @@ namespace Library
             }
         }
         
-        public void RemoveAt(int index)
+        public virtual void RemoveAt(int index)
         {
             if (index < 0 || index > Count - 1)
             {
@@ -146,7 +145,7 @@ namespace Library
 
             T[] array = data;
 
-            data = new T[Count];
+            data = new T[Capacity];
 
             for (int i = 0; i < Count + 1; i++)
             {

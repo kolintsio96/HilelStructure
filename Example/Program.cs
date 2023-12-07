@@ -95,7 +95,53 @@ namespace Example
             Console.WriteLine(stack.Peek());
             Console.WriteLine(stack.Count);
             #endregion
+
+            #region EventList
+            Logger<int> logger = new Logger<int>();
+            EventList<int> eventList = new EventList<int>();
+
+            eventList.AddEvent += logger.Log;
+            eventList.InsertEvent += logger.Log;
+            eventList.RemoveEvent += logger.Log;
+
+            eventList.Add(1);
+            eventList.Add(2);
+            eventList.Add(3);
+            eventList.Insert(0, 4);
+            eventList.Remove(2);
+
+            eventList.AddEvent -= logger.Log;
+            eventList.InsertEvent -= logger.Log;
+            eventList.RemoveEvent -= logger.Log;
+
+            eventList.Add(5);
+            eventList.Add(6);
+            eventList.Insert(0, 7);
+            eventList.Remove(5);
+            #endregion
             Console.ReadLine();
+        }
+    }
+
+    class Logger<T>
+    {
+        public void Log(object? _, ListEventArgs<T> eventArgs)
+        {
+            if (eventArgs.Index != null && eventArgs.Data != null)
+            {
+                Console.WriteLine($"Called event: {eventArgs.EventName}, Index: {eventArgs.Index}, Data: {eventArgs.Data}");
+            }
+            else if (eventArgs.Index != null)
+            {
+                Console.WriteLine($"Called event: {eventArgs.EventName}, Index: {eventArgs.Index}");
+            }
+            else if (eventArgs.Data != null)
+            {
+                Console.WriteLine($"Called event: {eventArgs.EventName}, Data: {eventArgs.Data}");
+            } else
+            {
+                Console.WriteLine($"Called event: {eventArgs.EventName}");
+            }
         }
     }
 }
