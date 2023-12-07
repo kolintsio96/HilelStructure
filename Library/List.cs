@@ -93,7 +93,8 @@ namespace Library
             bool inserted = false;
             Count++;
 
-            T[] array = data;
+            T[] array = new T[Capacity];
+            data.CopyTo(array, 0);
 
             if (Count > Capacity)
             {
@@ -118,9 +119,7 @@ namespace Library
                     {
                         data[i] = array[i - 1];
                     }
-
                 }
-
             }
         }
         
@@ -146,7 +145,7 @@ namespace Library
 
             T[] array = data;
 
-            data = new T[Count];
+            data = new T[Capacity];
 
             for (int i = 0; i < Count + 1; i++)
             {
