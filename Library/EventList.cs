@@ -1,72 +1,46 @@
-﻿using System.Collections.Generic;
-
-namespace Library
+﻿namespace Library
 {
-    public class ListEventArgs : EventArgs
+    public class ListEventArgs<T> : EventArgs
     {
-        public string EventName { get; set; }
+        public EventListEnum EventName { get; set; }
+
+        public T? Data { get; set; }
+
+        public int? Index { get; set; }
     }
-    public class EventList<T>
-    {
-        private System.Collections.Generic.List<EventHandler<ListEventArgs>> _addHandlers = new System.Collections.Generic.List<EventHandler<ListEventArgs>>();
-        private System.Collections.Generic.List<EventHandler<ListEventArgs>> _insertHandlers = new System.Collections.Generic.List<EventHandler<ListEventArgs>>();
-        private System.Collections.Generic.List<EventHandler<ListEventArgs>> _removeHandlers = new System.Collections.Generic.List<EventHandler<ListEventArgs>>();
-        private System.Collections.Generic.List<EventHandler<ListEventArgs>> _removeAtHandlers = new System.Collections.Generic.List<EventHandler<ListEventArgs>>();
-
-
-        private List<T> list = new List<T>();
-        public int Count { get { return list.Count; } }
-        
-        public event EventHandler<ListEventArgs>? Add
+    public class EventList<T> : List<T>
+    {           
+        public override void Add(T data)
         {
-            add { _addHandlers.Add(value); }
-            remove { _addHandlers.Remove(value); }
-        }
-        public void OnAdd(T data)
-        {
-            list.Add(data);
-            CallEvent(_addHandlers, "Add");
+            base.Add(data);
+            AddEvent?.Invoke(this, new ListEventArgs<T> { EventName = EventListEnum.Add, Data = data});
         }
 
-        public event EventHandler<ListEventArgs>? Insert
+        public override void Insert(int index, T data)
         {
-            add { _insertHandlers.Add(value); }
-            remove { _insertHandlers.Remove(value); }
-        }
-        public void OnInsert(int index, T data)
-        {
-            list.Insert(index, data);
-            CallEvent(_insertHandlers, "Insert");
+            base.Insert(index, data);
+            InsertEvent?.Invoke(this, new ListEventArgs<T> { EventName = EventListEnum.Insert, Data = data, Index = index });
         }
 
-        public event EventHandler<ListEventArgs>? Remove
+        public override void Remove(T data)
         {
-            add { _removeHandlers.Add(value); }
-            remove { _removeHandlers.Remove(value); }
-        }
-        public void OnRemove(T data)
-        {
-            list.Remove(data);
-            CallEvent(_removeHandlers, "Remove");
+            base.Remove(data);
+            RemoveEvent?.Invoke(this, new ListEventArgs<T> { EventName = EventListEnum.Remove, Data = data });
         }
         
-        public event EventHandler<ListEventArgs>? RemoveAt
+        public override void RemoveAt(int index)
         {
-            add { _removeAtHandlers.Add(value); }
-            remove { _removeAtHandlers.Remove(value); }
-        }
-        public void OnRemoveAt(int index)
-        {
-            list.RemoveAt(index);
-            CallEvent(_removeAtHandlers, "RemoveAt");
+            base.RemoveAt(index);
+            RemoveEvent?.Invoke(this, new ListEventArgs<T> { EventName = EventListEnum.RemoveAt, Index = index });
         }
 
-        private void CallEvent(System.Collections.Generic.List<EventHandler<ListEventArgs>> handlerList, string eventName)
-        {
-            foreach (var handler in handlerList)
-            {
-                handler(this, new ListEventArgs { EventName = eventName });
-            }
-        }
+        public event EventHandler<ListEventArgs<T>>? AddEvent;
+
+        public event EventHandler<ListEventArgs<T>>? InsertEvent;
+
+        public event EventHandler<ListEventArgs<T>>? RemoveEvent;
+
+        public event EventHandler<ListEventArgs<T>>? RemoveAtEvent;
+
     }
 }

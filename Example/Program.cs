@@ -97,41 +97,51 @@ namespace Example
             #endregion
 
             #region EventList
-            Logger logger = new Logger();
+            Logger<int> logger = new Logger<int>();
             EventList<int> eventList = new EventList<int>();
 
-            eventList.Add += logger.Log;
-            eventList.Insert += logger.Log;
-            eventList.Remove += logger.Log;
-            eventList.RemoveAt += logger.Log;
+            eventList.AddEvent += logger.Log;
+            eventList.InsertEvent += logger.Log;
+            eventList.RemoveEvent += logger.Log;
 
-            eventList.OnAdd(1);
-            eventList.OnAdd(2);
-            eventList.OnAdd(3);
-            eventList.OnInsert(0, 4);
-            eventList.OnRemove(2);
-            eventList.OnRemoveAt(0);
+            eventList.Add(1);
+            eventList.Add(2);
+            eventList.Add(3);
+            eventList.Insert(0, 4);
+            eventList.Remove(2);
 
-            eventList.Add -= logger.Log;
-            eventList.Insert -= logger.Log;
-            eventList.Remove -= logger.Log;
-            eventList.RemoveAt -= logger.Log;
+            eventList.AddEvent -= logger.Log;
+            eventList.InsertEvent -= logger.Log;
+            eventList.RemoveEvent -= logger.Log;
 
-            eventList.OnAdd(5);
-            eventList.OnAdd(6);
-            eventList.OnInsert(0, 7);
-            eventList.OnRemove(5);
-            eventList.OnRemoveAt(0);
+            eventList.Add(5);
+            eventList.Add(6);
+            eventList.Insert(0, 7);
+            eventList.Remove(5);
             #endregion
             Console.ReadLine();
         }
     }
 
-    class Logger
+    class Logger<T>
     {
-        public void Log(object? sender, ListEventArgs eventArgs)
+        public void Log(object? _, ListEventArgs<T> eventArgs)
         {
-            Console.WriteLine($"Called event: {eventArgs.EventName}");
+            if (eventArgs.Index != null && eventArgs.Data != null)
+            {
+                Console.WriteLine($"Called event: {eventArgs.EventName}, Index: {eventArgs.Index}, Data: {eventArgs.Data}");
+            }
+            else if (eventArgs.Index != null)
+            {
+                Console.WriteLine($"Called event: {eventArgs.EventName}, Index: {eventArgs.Index}");
+            }
+            else if (eventArgs.Data != null)
+            {
+                Console.WriteLine($"Called event: {eventArgs.EventName}, Data: {eventArgs.Data}");
+            } else
+            {
+                Console.WriteLine($"Called event: {eventArgs.EventName}");
+            }
         }
     }
 }
