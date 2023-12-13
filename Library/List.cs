@@ -29,6 +29,38 @@ namespace Library
             }
         }
 
+        public List(IEnumerable<T> collection)
+        {
+            if (collection == null)
+                throw new ArgumentNullException("Collection is null");
+
+            if (collection is System.Collections.Generic.ICollection<T> c)
+            {
+                int length = c.Count;
+                if (length == 0)
+                {
+                    data = emptyArray;
+                }
+                else
+                {
+                    data = new T[length];
+                    c.CopyTo(data, 0);
+                    Count = length;
+                }
+            }
+            else
+            {
+                data = emptyArray;
+                using (IEnumerator<T> en = collection!.GetEnumerator())
+                {
+                    while (en.MoveNext())
+                    {
+                        Add(en.Current);
+                    }
+                }
+            }
+        }
+
         public T this[int index]
         {
             get
