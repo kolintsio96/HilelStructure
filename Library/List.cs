@@ -1,7 +1,8 @@
-﻿using Interface;
+﻿using System.Collections;
+
 namespace Library
 {
-    public class List<T> : Interface.IList<T>
+    public class List<T> : Interface.IList<T>, IEnumerable<T>
     {
         private T[] data;
         public int Capacity { get; private set; } = 4;
@@ -26,6 +27,38 @@ namespace Library
             } else
             {
                 data = new T[capacity];
+            }
+        }
+
+        public List(IEnumerable<T> collection)
+        {
+            if (collection == null)
+                throw new ArgumentNullException("Collection is null");
+
+            if (collection is System.Collections.Generic.ICollection<T> c)
+            {
+                int length = c.Count;
+                if (length == 0)
+                {
+                    data = emptyArray;
+                }
+                else
+                {
+                    data = new T[length];
+                    c.CopyTo(data, 0);
+                    Count = length;
+                }
+            }
+            else
+            {
+                data = emptyArray;
+                using (IEnumerator<T> en = collection!.GetEnumerator())
+                {
+                    while (en.MoveNext())
+                    {
+                        Add(en.Current);
+                    }
+                }
             }
         }
 
@@ -218,6 +251,53 @@ namespace Library
                 last = data[Count - i - 1];
                 data[i] = last;
                 data[Count - i - 1] = first;
+            }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new ListIterator<T>(this);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        private class ListIterator<TItem> : IEnumerator<TItem>
+        {
+            private int currentIndex = 0;
+            
+            public TItem Current { get; private set; }
+
+            object IEnumerator.Current => Current;
+
+            private readonly List<TItem> list;
+
+            public ListIterator(List<TItem> list)
+            {
+                this.list = list;
+            }
+
+            public void Dispose()
+            {
+                
+            }
+
+            public bool MoveNext()
+            {
+                if (currentIndex < list.Count)
+                {
+                    Current = list[currentIndex];
+                    currentIndex++;
+                    return true;
+                }
+                return false; 
+            }
+
+            public void Reset()
+            {
+                currentIndex = 0;
             }
         }
     }

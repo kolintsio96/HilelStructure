@@ -1,7 +1,8 @@
 ﻿using Interface;
+using System.Collections;
 namespace Library
 {
-    public class Stack<T> : IStack<T>
+    public class Stack<T> : IStack<T>, IEnumerable<T>
     {
         private ILinkedList<T> linkedList = new LinkedList<T>();
         public int Count { get { return linkedList.Count; } }
@@ -38,6 +39,53 @@ namespace Library
         public T[] ToArray()
         {
             return linkedList.ToArray();
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new StackIterator<T>(linkedList.First);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        private class StackIterator<TItem> : IEnumerator<TItem>
+        {
+            private readonly ILinkedNode<TItem> _startNode;
+
+            private ILinkedNode<TItem>? _currentNode;
+
+            public TItem? Current { get; private set; }
+
+            object IEnumerator.Current => Current;
+
+            public StackIterator(ILinkedNode<TItem> node)
+            {
+                this._startNode = _currentNode = node;
+            }
+
+            public void Dispose()
+            {
+
+            }
+
+            public bool MoveNext()
+            {
+                if (_currentNode != null)
+                {
+                    Current = _currentNode.Data;
+                    _currentNode = _currentNode.Next;
+                    return true;
+                }
+                return false;
+            }
+
+            public void Reset()
+            {
+                _currentNode = _startNode;
+            }
         }
     }
 }
