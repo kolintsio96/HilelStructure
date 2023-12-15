@@ -1,4 +1,5 @@
 ﻿using Interface;
+using System.Collections;
 namespace Library
 {
     public class LinkedNode<T> : ILinkedNode<T>
@@ -15,7 +16,7 @@ namespace Library
             return Data == null ? string.Empty : Data.ToString();
         }
     }
-    public class LinkedList<T> : ILinkedList<T>
+    public class LinkedList<T> : ILinkedList<T>, IEnumerable<T>
     {
         public ILinkedNode<T>? First { get; protected set; }
         public ILinkedNode<T>? Last { get; protected set; }
@@ -126,6 +127,53 @@ namespace Library
                 index++;
             }
             return result;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new LinkedListIterator<T>(First);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        private class LinkedListIterator<TItem> : IEnumerator<TItem>
+        {
+            private readonly ILinkedNode<TItem> _startNode;
+
+            private ILinkedNode<TItem>? _currentNode;
+
+            public TItem? Current { get; private set; }
+
+            object IEnumerator.Current => Current;
+
+            public LinkedListIterator(ILinkedNode<TItem> node)
+            {
+                this._startNode = _currentNode = node;
+            }
+
+            public void Dispose()
+            {
+
+            }
+
+            public bool MoveNext()
+            {
+                if (_currentNode != null)
+                {
+                    Current = _currentNode.Data;
+                    _currentNode = _currentNode.Next;
+                    return true;
+                }
+                return false;
+            }
+
+            public void Reset()
+            {
+                _currentNode = _startNode;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Interface;
+using System.Collections;
 namespace Library
 {
     public class Node<T> : INode<T>
@@ -17,7 +18,7 @@ namespace Library
         }
     }
 
-    public class BinaryTree<T> : IBinaryTree<T> where T : IComparable<T>
+    public class BinaryTree<T> : IBinaryTree<T>, IEnumerable<T> where T : IComparable<T>
     {
         public INode<T>? Root { get; private set; }
         public int Count { get; private set; }
@@ -94,6 +95,34 @@ namespace Library
 
             InorderToArray(Root);
             return result;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return BinaryTreeIterator(Root).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        private IEnumerable<T> BinaryTreeIterator(INode<T> node)
+        {
+            if (node != null)
+            {
+                foreach (var leftValue in BinaryTreeIterator(node.Left))
+                {
+                    yield return leftValue;
+                }
+
+                yield return node.Key;
+
+                foreach (var rightValue in BinaryTreeIterator(node.Right))
+                {
+                    yield return rightValue;
+                }
+            }
         }
     }
 }

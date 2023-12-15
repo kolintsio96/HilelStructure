@@ -1,25 +1,15 @@
-﻿namespace Structure
+﻿namespace Library
 {
-    class Program
-    {
-        private static void Main(string[] args)
-        {
-            
-        }
-    }
     static class Helpers
     {
         public static IEnumerable<T> Filter<T>(this IEnumerable<T> list, Predicate<T> func)
         {
             foreach (var item in list)
             {
-
-                if (!func(item)) yield break;
-
-                yield return item;               
+                if (func(item)) yield return item;
             }
         }
-        
+
         public static IEnumerable<T> Skip<T>(this IEnumerable<T> list, int count)
         {
             int current = 0;
@@ -47,15 +37,12 @@
 
                 if (!matched)
                 {
-                    matched = func(item);
+                    matched = !func(item);
                 }
                 
                 if (matched)
                 {
                     yield return item;
-                } else
-                {
-                    yield break;
                 }
             }
         }
@@ -94,52 +81,53 @@
             }
         }
 
-        public static IEnumerable<T> FirstLastItem<T>(this IEnumerable<T> list, int index)
+        public static T? FirstLastItem<T>(this IEnumerable<T> list, int index)
         {
             if (list == null || list.Count() == 0)
             {
                 throw new ArgumentException("List is empty or null");
             }
-
+           
             int current = 0;
             foreach (var item in list)
             {
-
-                if (current != index) yield break;
-
-                yield return item;
+                if (current == index)
+                {
+                    return item;
+                };
                 current++;
             }
+            return default(T?);
         }
 
-        public static IEnumerable<T> First<T>(this IEnumerable<T> list)
+        public static T? First<T>(this IEnumerable<T> list)
         {
-            yield return (T)FirstLastItem<T>(list, 0);
+            return FirstLastItem<T>(list, 0);
         }
 
-        public static IEnumerable<T>? FirstOrDefault<T>(this IEnumerable<T> list)
+        public static T? FirstOrDefault<T>(this IEnumerable<T> list, Predicate<T> func)
+        {
+            foreach (var item in list)
+            {
+                if (func(item)) return item;
+            }
+
+            return default(T);
+        }
+
+        public static T? Last<T>(this IEnumerable<T> list)
+        {
+            return FirstLastItem<T>(list, list.Count() - 1);
+        }
+
+        public static T? LastOrDefault<T>(this IEnumerable<T> list)
         {
             if (list == null || list.Count() == 0)
             {
-                yield return default(T);
+                return default(T);
             }
 
-            yield return (T)First<T>(list);
-        }
-
-        public static IEnumerable<T> Last<T>(this IEnumerable<T> list)
-        {
-            yield return (T)FirstLastItem<T>(list, list.Count());
-        }
-
-        public static IEnumerable<T>? LastOrDefault<T>(this IEnumerable<T> list)
-        {
-            if (list == null || list.Count() == 0)
-            {
-                yield return default(T);
-            }
-
-            yield return (T)Last<T>(list);
+            return Last<T>(list);
         }
 
         public static IEnumerable<TResult> Select<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, int, TResult> selector)
@@ -222,14 +210,14 @@
             return list.ToArray();
         }
 
-        public static Library.List<T> ToList<T>(this IEnumerable<T> source)
+        public static List<T> ToList<T>(this IEnumerable<T> source)
         {
             if (source == null)
             {
                 throw new ArgumentNullException("Source is null");
             }
 
-            return new Library.List<T>(source);
+            return new List<T>(source);
         }
     }
 }

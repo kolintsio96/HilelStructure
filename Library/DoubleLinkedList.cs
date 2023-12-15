@@ -1,4 +1,5 @@
 ﻿using Interface;
+using System.Collections;
 namespace Library
 {
     public class DoubleLinkedNode<T> : LinkedNode<T>, IDoubleLinkedNode<T>   {
